@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/User.dart';
+import 'package:flutterapp/user_card.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -35,7 +37,6 @@ class UserList extends StatefulWidget {
 }
 
 class _UserListState extends State<UserList> {
-
   List<User> _userList = [
     User("Shamim", 3.53),
     User("Roni", 4),
@@ -45,52 +46,13 @@ class _UserListState extends State<UserList> {
     User("Kamrul", 4)
   ];
 
-  Widget userTemplate(User user) {
-    return Card(
-      margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
-      child: Padding(
-        padding: EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(
-              user._name,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Colors.grey[600],
-              ),
-            ),
-            Text(
-              "Cgpa: ${user.cgpa}",
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.grey[800]
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: 10.0),
       child: Column(
-        children: _userList.map((user) => userTemplate(user)).toList(),
+        children: _userList.map((user) => UserCard(user: user)).toList(),
       ),
     );
   }
-}
-
-class User {
-  String _name;
-  double _cgpa;
-
-  User(this._name, this._cgpa);
-
-  double get cgpa => _cgpa;
-
-  String get name => _name;
 }
