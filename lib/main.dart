@@ -17,124 +17,75 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text("Demo Project"),
         centerTitle: true,
-        backgroundColor: Colors.grey[850],
-        elevation: 0.0,
+        backgroundColor: Colors.redAccent,
+//        elevation: 0.0,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-//          level += 1;
-          setState(() {
-            level++;
-          });
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.grey[800],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Center(
-              child: CircleAvatar(
-                backgroundImage: AssetImage("assets/wallpaper4.jpg"),
-                radius: 60.0,
-              ),
-            ),
-            Divider(
-              height: 50.0,
-              color: Colors.grey[800],
-            ),
-            Text(
-              "Name",
-              style: TextStyle(color: Colors.grey, letterSpacing: 2.0),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              "Shamim",
-              style: TextStyle(
-                  color: Colors.amberAccent[200],
-                  letterSpacing: 2.0,
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Text(
-              "Lavel",
-              style: TextStyle(color: Colors.grey, letterSpacing: 2.0),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              "$level",
-              style: TextStyle(
-                  color: Colors.amberAccent[200],
-                  letterSpacing: 2.0,
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Text(
-              "Phone Number",
-              style: TextStyle(color: Colors.grey, letterSpacing: 2.0),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              "+8801687430265",
-              style: TextStyle(
-                  color: Colors.amberAccent[200],
-                  letterSpacing: 2.0,
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Text(
-              "Phone Number",
-              style: TextStyle(color: Colors.grey, letterSpacing: 2.0),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Row(
+      body: UserList(),
+    );
+  }
+}
+
+class UserList extends StatefulWidget {
+  @override
+  _UserListState createState() => _UserListState();
+}
+
+class _UserListState extends State<UserList> {
+  List<User> userList = [
+    User("Shamim", 3.53),
+    User("Roni", 4),
+    User("Mehedi", 4),
+    User("Rajon", 4),
+    User("Sourav", 4),
+    User("Kamrul", 4)
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: 10.0),
+      child: Column(
+        children: userList.map((e) {
+          return Container(
+            padding: EdgeInsets.all(10.0),
+            margin: EdgeInsets.only(bottom: 5.0),
+            color: Colors.blueAccent,
+            child: Row(
               children: <Widget>[
-                Icon(
-                  Icons.email,
-                  color: Colors.grey[400],
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                  "mdshamim723@gmail.com",
-                  style: TextStyle(
-                    color: Colors.grey[400],
-                    fontSize: 18.0,
-                    letterSpacing: 1.0,
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    e._name,
+                    style: TextStyle(color: Colors.white),
                   ),
-                )
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    e.cgpa.toString(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
               ],
             ),
-            SizedBox(
-              height: 30,
-            ),
-          ],
-        ),
+          );
+        }).toList(),
       ),
     );
   }
+}
+
+class User {
+  String _name;
+  double _cgpa;
+
+  User(this._name, this._cgpa);
+
+  double get cgpa => _cgpa;
+
+  String get name => _name;
 }
