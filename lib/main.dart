@@ -41,9 +41,6 @@ class _UserListState extends State<UserList> {
     User("Shamim", 3.53),
     User("Roni", 4),
     User("Mehedi", 4),
-    User("Rajon", 4),
-    User("Sourav", 4),
-    User("Kamrul", 4)
   ];
 
   @override
@@ -51,7 +48,16 @@ class _UserListState extends State<UserList> {
     return Padding(
       padding: EdgeInsets.only(top: 10.0),
       child: Column(
-        children: _userList.map((user) => UserCard(user: user)).toList(),
+        children: _userList
+            .map((user) => UserCard(
+                user: user,
+                delete: () {
+//                  _userList.remove(user);
+                  setState(() {
+                    _userList.remove(user);
+                  });
+                }))
+            .toList(),
       ),
     );
   }

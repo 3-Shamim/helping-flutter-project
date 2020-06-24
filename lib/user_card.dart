@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/User.dart';
 
 class UserCard extends StatelessWidget {
-  final User user;
 
-  UserCard({this.user});
+  final User user;
+  final Function delete;
+
+  UserCard({this.user, this.delete});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +24,20 @@ class UserCard extends StatelessWidget {
                 color: Colors.grey[600],
               ),
             ),
+            SizedBox(
+              height: 8.0,
+            ),
             Text(
               "Cgpa: ${user.cgpa}",
               style: TextStyle(fontSize: 14.0, color: Colors.grey[800]),
+            ),
+            SizedBox(
+              height: 8.0,
+            ),
+            FlatButton.icon(
+              label: Text("Delete user"),
+              icon: Icon(Icons.delete),
+              onPressed: delete,
             )
           ],
         ),
