@@ -1,7 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:flutterapp/models/world_time.dart';
+import 'package:flutterapp/pages/home.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loading extends StatefulWidget {
   static final String routeName = "/loading";
@@ -11,27 +11,39 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  void getData() async {
-    Response response =
-        await get('https://jsonplaceholder.typicode.com/todos/1');
-//    print(response.body);
+//  String _time = "loading";
 
-    Map data = json.decode(response.body);
-    print(data);
-    print(data["userId"]);
+  void setupDateTime() async {
+    WorldTime worldTime = new WorldTime("Asia", null, "asia.png", "Asia/Dhaka", false);
 
+      await worldTime.getTime();
+      Navigator.pushReplacementNamed(context, Home.routeName, arguments: {
+        "location": worldTime.location,
+        "flag": worldTime.flag,
+        "time": worldTime.time,
+        "isDayTime": worldTime.isDayTime
+      });
+//      setState(() {
+//        _time = worldTime.time;
+//      });
   }
 
   @override
   void initState() {
     super.initState();
-    getData();
+    setupDateTime();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("loading..."),
+      backgroundColor: Colors.blue[900],
+      body: Center(
+        child: SpinKitCubeGrid(
+          color: Colors.white,
+          size: 80.0,
+        ),
+      ),
     );
   }
 }

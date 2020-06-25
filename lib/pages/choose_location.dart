@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/models/world_time.dart';
+import 'package:flutterapp/pages/home.dart';
 
 class ChooseLocation extends StatefulWidget {
-
   static final String routeName = "/location";
 
   @override
@@ -9,7 +10,6 @@ class ChooseLocation extends StatefulWidget {
 }
 
 class _ChooseLocationState extends State<ChooseLocation> {
-
 //  int counter = 0;
 
 //  void getData() async {
@@ -37,11 +37,33 @@ class _ChooseLocationState extends State<ChooseLocation> {
 //
 //  }
 
+  List<WorldTime> locations = [
+    WorldTime('London', null, 'uk.png', 'Europe/London', false),
+    WorldTime('Athens', null, 'greece.png', 'Europe/Berlin', false),
+    WorldTime('Cairo', null, 'egypt.png', 'Africa/Cairo', false),
+    WorldTime('Nairobi', null, 'kenya.png', 'Africa/Nairobi', false),
+    WorldTime('Chicago', null, 'usa.png', 'America/Chicago', false),
+    WorldTime('New York', null, 'usa.png', 'America/New_York', false),
+    WorldTime('Seoul', null, 'south_korea.png', 'Asia/Seoul', false),
+    WorldTime('Jakarta', null, 'indonesia.png', 'Asia/Jakarta', false),
+  ];
+
+  void updateTime(index) async {
+    WorldTime worldTime = locations[index];
+
+    await worldTime.getTime();
+
+    Navigator.pop(context, {
+      "location": worldTime.location,
+      "flag": worldTime.flag,
+      "time": worldTime.time,
+      "isDayTime": worldTime.isDayTime
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     print("Build function run");
-
 
     return Scaffold(
       appBar: AppBar(
@@ -58,7 +80,24 @@ class _ChooseLocationState extends State<ChooseLocation> {
 //        },
 //        child: Text("Counter is $counter"),
 //      ),
-      body:Text("choose location"),
+      body: ListView.builder(
+        itemCount: locations.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              child: ListTile(
+                onTap: () {
+                  print(locations[index].location);
+                  updateTime(index);
+                },
+                title: Text(locations[index].location),
+                leading: Icon(Icons.location_searching),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
